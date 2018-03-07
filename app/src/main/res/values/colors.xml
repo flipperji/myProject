@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <!--login_register-->
+    <color name="login_register_inputarea_hint_color">#C5C5C5</color>
+    <color name="login_register_inputarea_text_color">#222222</color>
+    <color name="login_register_btn_1_normal_color">#5FD9DA</color>
+    <color name="login_register_btn_1_pressed_color">#00CBCC</color>
+    <color name="login_register_btn_2_normal_color">#4A82B1</color>
+    <color name="login_register_btn_2_pressed_color">#4676A6</color>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="LoginRegisterInputBox">
+        <attr name="rootView_bg" format="integer" />
+        <attr name="leftIcon_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="gone" value="1" />
+        </attr>
+        <attr name="inputArea_hint" format="string" />
+        <attr name="inputArea_hintColor" format="color" />
+        <attr name="inputArea_textSize" format="dimension" />
+        <attr name="inputArea_textColor" format="color" />
+        <attr name="inputArea_maxLength" format="integer" />
+        <attr name="inputArea_inputType" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="number" value="1" />
+            <enum name="password" value="2" />
+            <enum name="plaintext" value="3" />
+        </attr>
+        <attr name="cleanIcon_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="gone" value="1" />
+        </attr>
+        <attr name="eyeIcon_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="gone" value="1" />
+        </attr>
+        <!--<attr name="belowTip_text" format="string" />
+        <attr name="belowTip_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="gone" value="1" />
+        </attr>-->
+    </declare-styleable>
+
+</resources>

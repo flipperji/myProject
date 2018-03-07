@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:inputbox="http://schemas.android.com/apk/res-auto"
+
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.flippey.qrdemo.LoginRegisterInputBox
+        android:id="@+id/act_login_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="43dp"
+        android:clickable="true"
+        inputbox:inputArea_hint="账号"
+        inputbox:inputArea_hintColor="@color/login_register_inputarea_hint_color"
+        inputbox:inputArea_inputType="normal"
+        inputbox:inputArea_textColor="@color/login_register_inputarea_text_color"
+        inputbox:leftIcon_visibility="visible"
+        inputbox:rootView_bg="@drawable/login_register_inputbox_bg"/>
+
+
+
+    <com.flippey.qrdemo.LoginRegisterInputBox
+        android:id="@+id/act_login_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="13dp"
+        android:clickable="true"
+        inputbox:inputArea_hint="密码"
+        inputbox:inputArea_hintColor="@color/login_register_inputarea_hint_color"
+        inputbox:inputArea_inputType="password"
+        inputbox:inputArea_maxLength="16"
+        inputbox:inputArea_textColor="@color/login_register_inputarea_text_color"
+        inputbox:leftIcon_visibility="visible"
+        inputbox:rootView_bg="@drawable/login_register_inputbox_bg"/>
+
+
+    <TextView
+        android:id="@+id/act_login_tv_login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="27dp"
+        android:background="#1c68a0"
+        android:gravity="center"
+        android:text="登陆"
+        android:textColor="#ffffff"
+        android:textSize="16sp"/>
+
+</LinearLayout>
