@@ -1,5 +1,6 @@
 package com.flippey.qrdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getData();
+                startActivity(new Intent(mInstance,MainActivity.class));
+                //getData();
             }
         });
 

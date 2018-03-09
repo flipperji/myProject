@@ -5,16 +5,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.flippey.qrdemo.MainActivity">
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ffffff" />
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <com.flippey.qrdemo.TabRadioGroup
+        android:id="@+id/main_tab_group"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="扫码"
-        android:id="@+id/qr"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_gravity="bottom"
+        android:background="#ffffff"
+        android:baselineAligned="false"
+        android:minHeight="50dp"
+        app:trgOrientation="horizontal">
+
+        <com.flippey.qrdemo.TabRadioButton
+            android:id="@+id/main_trb_home"
+            style="@style/TabRadioButton"
+            app:trbButton="@drawable/main_tab_home_selector"
+            app:trbChecked="true"
+            app:trbText="首页" />
+
+
+        <com.flippey.qrdemo.TabRadioButton
+            android:id="@+id/main_trb_me"
+            style="@style/TabRadioButton"
+            app:trbButton="@drawable/main_tab_me_selector"
+            app:trbText="我" />
+
+    </com.flippey.qrdemo.TabRadioGroup>
 
 </LinearLayout>

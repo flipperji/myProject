@@ -33,5 +33,19 @@
             <enum name="gone" value="1" />
         </attr>-->
     </declare-styleable>
+    <!-- TabRadioButton -->
+    <declare-styleable name="TabRadioButton">
+        <attr name="trbChecked" format="boolean" />
+        <attr name="trbButton" format="reference" />
+        <attr name="trbText" format="reference|string" />
+    </declare-styleable>
 
+    <!-- TabRadioGroup -->
+    <declare-styleable name="TabRadioGroup">
+        <attr name="trgCheckedButton" format="integer" />
+        <attr name="trgOrientation">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>
