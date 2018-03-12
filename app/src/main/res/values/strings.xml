@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">QrDemo</string>
+    <string name="available_tip">可使用(%1$d)</string>
+    <string name="unavailable_tip">不可用(%1$d)</string>
+    <string name="already_used_tip">已使用(%1$d)</string>
+    <string name="invalid_tip">已失效(%1$d)</string>
+
 </resources>

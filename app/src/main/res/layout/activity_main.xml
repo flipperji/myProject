@@ -7,12 +7,83 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.flippey.qrdemo.MainActivity">
-    <FrameLayout
-        android:id="@+id/container"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#ffffff" />
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/act_main_ll_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/act_main_tv_traffic_query"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/traffic_query_bg"
+                android:gravity="center"
+                android:text="流量查询"/>
+
+
+            <TextView
+                android:id="@+id/act_main_tv_change_ticket"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/change_ticket_bg"
+                android:gravity="center"
+                android:text="换票助手"/>
+
+
+            <TextView
+                android:id="@+id/act_main_tv_scan_code"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/scan_code_bg"
+                android:gravity="center"
+                android:text="扫码验票"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/act_main_ll_me"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="master"
+                android:textColor="#222"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/act_main_tv_logout"
+                android:layout_width="330dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:background="#f77160"
+                android:gravity="center"
+                android:text="退出登录"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
     <com.flippey.qrdemo.TabRadioGroup
@@ -30,14 +101,14 @@
             style="@style/TabRadioButton"
             app:trbButton="@drawable/main_tab_home_selector"
             app:trbChecked="true"
-            app:trbText="首页" />
+            app:trbText="首页"/>
 
 
         <com.flippey.qrdemo.TabRadioButton
             android:id="@+id/main_trb_me"
             style="@style/TabRadioButton"
             app:trbButton="@drawable/main_tab_me_selector"
-            app:trbText="我" />
+            app:trbText="我"/>
 
     </com.flippey.qrdemo.TabRadioGroup>
 

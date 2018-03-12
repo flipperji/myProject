@@ -26,6 +26,7 @@
 
         <activity android:name="com.flippey.qrlib.CaptureActivity"/>
         <activity android:name=".SimpleCaptureActivity"/>
+        <activity android:name=".MyDiscountActivity"/>
 
     </application>
 

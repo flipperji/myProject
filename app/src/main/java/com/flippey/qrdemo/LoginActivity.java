@@ -15,6 +15,9 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by flippey on 2018/3/7 13:21.
  */
@@ -22,7 +25,7 @@ import com.lzy.okgo.model.Response;
 public class LoginActivity extends AppCompatActivity {
     private LoginActivity mInstance;
     private EditText mAccountInputArea;
-    private String url = "http://www.love360.net/zhpw/zhpw-admin/src/request/auth.php";
+    private String url = "http://shop.shenglenet.com/zhpw-admin/src/request/auth.php";
     private TextView mLogin;
 
     @Override
@@ -47,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(mInstance,MainActivity.class));
-                //getData();
+                getData();
             }
         });
 
@@ -61,14 +64,15 @@ public class LoginActivity extends AppCompatActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.e("tttt", "onSuccess: " + response.body());
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
+                        String body = response.body();
+                        try {
+                            JSONObject object = new JSONObject(body);
+                            LoginBean parse = LoginBean.parse(object);
+                            Log.e("ttttt string", "onSuccess: " + parse.getSuccess());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
-
     }
 }

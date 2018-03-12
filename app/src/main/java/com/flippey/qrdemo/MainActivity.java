@@ -1,18 +1,21 @@
 package com.flippey.qrdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
-public class MainActivity extends AppCompatActivity implements TabRadioGroup.OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity implements TabRadioGroup.OnCheckedChangeListener, View.OnClickListener {
     private MainActivity mInstance;
     private TabRadioGroup mTabGroup;
     public static final int TAB_HOME = 0;
     public static final int TAB_ME = 1;
     public static final int[] TAB_IDS = {R.id.main_trb_home, R.id.main_trb_me};
     private FrameLayout mContainer;
+    private LinearLayout mLlHome;
+    private LinearLayout mLlMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,38 +34,14 @@ public class MainActivity extends AppCompatActivity implements TabRadioGroup.OnC
 
     private void initView() {
         mTabGroup = (TabRadioGroup) findViewById(R.id.main_tab_group);
-        mContainer = (FrameLayout) findViewById(R.id.container);
+        mLlHome = findViewById(R.id.act_main_ll_home);
+        mLlMe = findViewById(R.id.act_main_ll_me);
         mTabGroup.setOnCheckedChangeListener(this);
-        setFragment(TAB_HOME);
         mTabGroup.check(TAB_IDS[TAB_HOME]);
-    }
-
-
-    private FragmentStatePagerAdapter mFragmentAdapter =
-            new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-                @Override
-                public Fragment getItem(int position) {
-                    switch (position) {
-                        case TAB_HOME:
-                            return HomeFragment.newInstance();
-                        case TAB_ME:
-                            return MeFragment.newInstance();
-                        default:
-                            return HomeFragment.newInstance();
-                    }
-                }
-
-                @Override
-                public int getCount() {
-                    return TAB_IDS.length;
-                }
-            };
-
-
-    private void setFragment(int position) {
-        Fragment fragment = (Fragment) mFragmentAdapter.instantiateItem(mContainer, position);
-        mFragmentAdapter.setPrimaryItem(mContainer, 0, fragment);
-        mFragmentAdapter.finishUpdate(mContainer);
+        findViewById(R.id.act_main_tv_traffic_query).setOnClickListener(this);
+        findViewById(R.id.act_main_tv_change_ticket).setOnClickListener(this);
+        findViewById(R.id.act_main_tv_scan_code).setOnClickListener(this);
+        findViewById(R.id.act_main_tv_logout).setOnClickListener(this);
     }
 
 
@@ -77,6 +56,31 @@ public class MainActivity extends AppCompatActivity implements TabRadioGroup.OnC
                 tab = TAB_ME;
                 break;
         }
-        setFragment(tab);
+        chageView(tab);
+    }
+
+    private void chageView(int tab) {
+        mLlHome.setVisibility(tab == TAB_HOME ? View.VISIBLE : View.GONE);
+        mLlMe.setVisibility(tab == TAB_ME ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.act_main_tv_traffic_query:
+                //流量查询
+                break;
+            case R.id.act_main_tv_change_ticket:
+                //换票助手
+                startActivity(new Intent(mInstance,MyDiscountActivity.class));
+                break;
+            case R.id.act_main_tv_scan_code:
+                //扫码验票
+                startActivity(new Intent(mInstance,SimpleCaptureActivity.class));
+                break;
+            case R.id.act_main_tv_logout:
+                //退出登陆
+                break;
+        }
     }
 }
