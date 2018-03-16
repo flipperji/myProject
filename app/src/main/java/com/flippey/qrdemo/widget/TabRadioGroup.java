@@ -1,4 +1,4 @@
-package com.flippey.qrdemo;
+package com.flippey.qrdemo.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.flippey.qrdemo.R;
 
 import java.util.ArrayList;
 import java.util.List;

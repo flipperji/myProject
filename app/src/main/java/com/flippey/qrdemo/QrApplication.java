@@ -2,6 +2,7 @@ package com.flippey.qrdemo;
 
 import android.app.Application;
 
+import com.flippey.qrdemo.utils.Util;
 import com.lzy.okgo.OkGo;
 
 /**
@@ -13,5 +14,6 @@ public class QrApplication extends Application {
     public void onCreate() {
         super.onCreate();
         OkGo.getInstance().init(this);
+        Util.init(this);
     }
 }

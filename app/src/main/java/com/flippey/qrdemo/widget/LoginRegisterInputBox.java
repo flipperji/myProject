@@ -1,7 +1,8 @@
-package com.flippey.qrdemo;
+package com.flippey.qrdemo.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.flippey.qrdemo.R;
 
 /**
  * 登录注册输入框
@@ -55,7 +58,7 @@ public class LoginRegisterInputBox extends RelativeLayout implements View.OnClic
      */
     // private TextView mBelowTip;
 
-    //private Typeface mTypeface;
+    private Typeface mTypeface;
 
     public LoginRegisterInputBox(Context context) {
         super(context);
@@ -99,7 +102,7 @@ public class LoginRegisterInputBox extends RelativeLayout implements View.OnClic
         // String belowTipText = a.getString(R.styleable.LoginRegisterInputBox_belowTip_text);
         a.recycle();
 
-        //mTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/xidi.ttf");
+        mTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/xidi.ttf");
 
         // init view
         LayoutInflater inflater = (LayoutInflater) getContext()
@@ -114,7 +117,7 @@ public class LoginRegisterInputBox extends RelativeLayout implements View.OnClic
         // mRootView.setTranslationZ(3);
 
         mLeftIcon = (TextView) findViewById(R.id.tv_login_register_inputbox_lefticon);
-        //mLeftIcon.setTypeface(mTypeface);
+        mLeftIcon.setTypeface(mTypeface);
         if (leftIconVisibility == 0) {
             mLeftIcon.setVisibility(View.VISIBLE);
         } else if (leftIconVisibility == 1) {

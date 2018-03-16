@@ -1,4 +1,4 @@
-package com.flippey.qrdemo;
+package com.flippey.qrdemo.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

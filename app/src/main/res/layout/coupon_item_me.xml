@@ -104,7 +104,7 @@
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:singleLine="true"
-                android:textColor="#222222"
+                android:textColor="#777777"
                 android:textSize="12sp"/>
 
             <TextView
@@ -118,7 +118,7 @@
                 android:textColor="#777777"
                 android:textSize="12sp"/>
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tv_coupon_item_me_go"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -129,7 +129,7 @@
                 android:singleLine="true"
                 android:text=">"
                 android:textColor="#c5c5c5"
-                android:textSize="26sp"/>
+                android:textSize="26sp"/>-->
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

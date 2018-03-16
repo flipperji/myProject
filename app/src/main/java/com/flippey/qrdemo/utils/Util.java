@@ -1,4 +1,4 @@
-package com.flippey.qrdemo;
+package com.flippey.qrdemo.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.flippey.qrdemo.R;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -21,6 +29,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -232,4 +241,38 @@ public class Util {
             return null;
         }
     }
+
+    public static void showToast(Context context, String text) {
+        final Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        View view = LayoutInflater.from(context).inflate(R.layout.toast_layout, null);
+        TextView tv = (TextView) view.findViewById(R.id.toast_textview);
+        if (tv != null) {
+            tv.setText(text);
+        }
+        toast.setView(view);
+        toast.show();
+        tv.getRootView().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                toast.cancel();
+                return false;
+            }
+        });
+    }
+
+
+    /**
+     * 校验是否是手机号
+     *
+     * @param num
+     * @return 校验通过返回true，否则返回false
+     */
+    public static boolean isPhoneNum(String num) {
+        Pattern p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
+        Matcher m = p.matcher(num);
+        return m.matches();
+    }
+
 }

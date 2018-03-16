@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.flippey.qrdemo.MainActivity">
+    tools:context="com.flippey.qrdemo.act.MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -62,10 +62,10 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/act_main_tv_username"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center"
-                android:text="master"
                 android:textColor="#222"
                 android:textSize="14sp"/>
 
@@ -86,7 +86,7 @@
     </RelativeLayout>
 
 
-    <com.flippey.qrdemo.TabRadioGroup
+    <com.flippey.qrdemo.widget.TabRadioGroup
         android:id="@+id/main_tab_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
         android:minHeight="50dp"
         app:trgOrientation="horizontal">
 
-        <com.flippey.qrdemo.TabRadioButton
+        <com.flippey.qrdemo.widget.TabRadioButton
             android:id="@+id/main_trb_home"
             style="@style/TabRadioButton"
             app:trbButton="@drawable/main_tab_home_selector"
@@ -104,12 +104,12 @@
             app:trbText="首页"/>
 
 
-        <com.flippey.qrdemo.TabRadioButton
+        <com.flippey.qrdemo.widget.TabRadioButton
             android:id="@+id/main_trb_me"
             style="@style/TabRadioButton"
             app:trbButton="@drawable/main_tab_me_selector"
             app:trbText="我"/>
 
-    </com.flippey.qrdemo.TabRadioGroup>
+    </com.flippey.qrdemo.widget.TabRadioGroup>
 
 </LinearLayout>

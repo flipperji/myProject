@@ -22,7 +22,7 @@ public class DiscountFragment extends Fragment {
     private ListView mListView;
     private View mNoContentView;
     private List<Object> mList = new ArrayList();
-    private MyDiscountAdapter.TYPE mType = MyDiscountAdapter.TYPE.AVAILABLE;
+    private TicketAssistantAdapter.TYPE mType = TicketAssistantAdapter.TYPE.AVAILABLE;
 
     private boolean mGettingData = false;
     private int mTotal;
@@ -133,11 +133,11 @@ public class DiscountFragment extends Fragment {
         }
     }
 
-    public MyDiscountAdapter.TYPE getType() {
+    public TicketAssistantAdapter.TYPE getType() {
         return mType;
     }
 
-    public void setType(MyDiscountAdapter.TYPE mType) {
+    public void setType(TicketAssistantAdapter.TYPE mType) {
         this.mType = mType;
     }
 
@@ -150,11 +150,11 @@ public class DiscountFragment extends Fragment {
 
         mGettingData = true;
         StringBuilder param = new StringBuilder("?status=");
-        if (getType() == MyDiscountAdapter.TYPE.AVAILABLE) {
+        if (getType() == TicketAssistantAdapter.TYPE.AVAILABLE) {
             param.append(1);
-        } else if (getType() == MyDiscountAdapter.TYPE.INVALID) {
+        } else if (getType() == TicketAssistantAdapter.TYPE.INVALID) {
             param.append(-1);
-        } else if (getType() == MyDiscountAdapter.TYPE.USED) {
+        } else if (getType() == TicketAssistantAdapter.TYPE.USED) {
             param.append(0);
         }
         param.append("&page=");

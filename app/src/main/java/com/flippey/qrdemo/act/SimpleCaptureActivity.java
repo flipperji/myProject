@@ -1,4 +1,4 @@
-package com.flippey.qrdemo;
+package com.flippey.qrdemo.act;
 
 import android.app.Activity;
 import android.content.DialogInterface;

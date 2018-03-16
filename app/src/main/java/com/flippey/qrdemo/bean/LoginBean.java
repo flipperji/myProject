@@ -1,4 +1,4 @@
-package com.flippey.qrdemo;
+package com.flippey.qrdemo.bean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +27,9 @@ public class LoginBean implements Serializable {
         try {
             if (object.has(SUCCESS)) {
                 loginBean.success = object.getString(SUCCESS);
+            }
+            if (object.has(TOKEN)) {
+                loginBean.token = object.getString(TOKEN);
             }
         } catch (JSONException e) {
             e.printStackTrace();

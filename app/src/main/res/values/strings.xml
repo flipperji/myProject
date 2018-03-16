@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">QrDemo</string>
+    <string name="app_name">胜乐票务</string>
     <string name="available_tip">可使用(%1$d)</string>
     <string name="unavailable_tip">不可用(%1$d)</string>
     <string name="already_used_tip">已使用(%1$d)</string>
     <string name="invalid_tip">已失效(%1$d)</string>
+    <string name="copyright_tip">©2018 胜乐网络科技有限公司 版权所有</string>
 
 </resources>

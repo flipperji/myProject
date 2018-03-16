@@ -6,7 +6,14 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.flippey.qrdemo.LoginRegisterInputBox
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/logo"/>
+
+    <com.flippey.qrdemo.widget.LoginRegisterInputBox
         android:id="@+id/act_login_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,8 +29,7 @@
         inputbox:rootView_bg="@drawable/login_register_inputbox_bg"/>
 
 
-
-    <com.flippey.qrdemo.LoginRegisterInputBox
+    <com.flippey.qrdemo.widget.LoginRegisterInputBox
         android:id="@+id/act_login_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,4 +59,18 @@
         android:textColor="#ffffff"
         android:textSize="16sp"/>
 
+    <View
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/tv_company_copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:text="@string/copyright_tip"
+        android:textColor="#C5C5C5"
+        android:textSize="11sp"/>
 </LinearLayout>
