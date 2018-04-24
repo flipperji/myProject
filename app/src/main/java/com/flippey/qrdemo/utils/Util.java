@@ -1,5 +1,6 @@
 package com.flippey.qrdemo.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,7 +10,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -273,6 +277,38 @@ public class Util {
         Pattern p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
         Matcher m = p.matcher(num);
         return m.matches();
+    }
+
+
+    public static String addSymble(String price) {
+        if (TextUtils.isEmpty(price)) return "";
+        if (Character.isDigit(price.charAt(0))) {
+            price = " ¥ " + price;
+            return price;
+        } else if (price.contains("￥")) {
+            price = price.replace("￥", " ¥ ");
+            return price;
+        }
+        return price;
+    }
+
+
+    /**
+     * 判断当前网络是否连接
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isNetworkConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            @SuppressLint("MissingPermission") NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            if (activeNetworkInfo != null) {
+                return activeNetworkInfo.isAvailable();
+            }
+        }
+        return false;
     }
 
 }

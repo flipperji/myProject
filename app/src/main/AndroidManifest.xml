@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:name=".QrApplication"
         android:allowBackup="true"
@@ -28,6 +29,8 @@
         <activity android:name="com.flippey.qrlib.CaptureActivity"/>
         <activity android:name=".act.SimpleCaptureActivity"/>
         <activity android:name=".act.TicketAssistantActivity"/>
+        <activity android:name=".act.TicketSaleQueryActivity"/>
+        <activity android:name=".act.TicketSaleDetailActivity"/>
 
     </application>
 

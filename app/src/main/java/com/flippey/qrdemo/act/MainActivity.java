@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.flippey.qrdemo.R;
 import com.flippey.qrdemo.utils.SPUtils;
+import com.flippey.qrdemo.utils.Util;
 import com.flippey.qrdemo.widget.TabRadioGroup;
 
 public class MainActivity extends AppCompatActivity implements TabRadioGroup.OnCheckedChangeListener, View.OnClickListener {
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements TabRadioGroup.OnC
         switch (view.getId()) {
             case R.id.act_main_tv_traffic_query:
                 //流量查询
+                startActivity(new Intent(mInstance,TicketSaleQueryActivity.class));
                 break;
             case R.id.act_main_tv_change_ticket:
                 //换票助手
@@ -85,10 +87,17 @@ public class MainActivity extends AppCompatActivity implements TabRadioGroup.OnC
                 break;
             case R.id.act_main_tv_scan_code:
                 //扫码验票
-                startActivity(new Intent(mInstance,SimpleCaptureActivity.class));
+                if (Util.isNetworkConnected(mInstance)) {
+                    startActivity(new Intent(mInstance, SimpleCaptureActivity.class));
+                } else {
+                    Util.showToast(mInstance,"当前网络异常，请稍后重试");
+                }
                 break;
             case R.id.act_main_tv_logout:
                 //退出登陆
+                SPUtils.clear(mInstance);
+                startActivity(new Intent(mInstance, LoginActivity.class));
+                mInstance.finish();
                 break;
         }
     }

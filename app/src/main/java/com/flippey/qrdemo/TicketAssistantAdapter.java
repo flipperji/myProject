@@ -83,11 +83,18 @@ public class TicketAssistantAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        TicketListBean ticketListBean = mList.get(position);
+        final TicketListBean ticketListBean = mList.get(position);
         holder.title.setText(ticketListBean.getTicket_title());
         holder.limitBuy.setText("购买时间："+ticketListBean.getCreatetime());
         holder.expiryDate.setText("有效期至："+ticketListBean.getEnd_date_time());
-
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCallback != null) {
+                    mCallback.onItemClick(ticketListBean.getId());
+                }
+            }
+        });
         // 50元
         Double amount = ticketListBean.getPrice();
         holder.price.setText(String.valueOf(amount/100));

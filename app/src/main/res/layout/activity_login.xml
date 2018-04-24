@@ -55,7 +55,7 @@
         android:layout_marginTop="27dp"
         android:background="#1c68a0"
         android:gravity="center"
-        android:text="登陆"
+        android:text="登录"
         android:textColor="#ffffff"
         android:textSize="16sp"/>
 

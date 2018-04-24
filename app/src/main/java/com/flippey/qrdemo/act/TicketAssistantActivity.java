@@ -1,5 +1,6 @@
 package com.flippey.qrdemo.act;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,12 +18,14 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.flippey.qrdemo.TicketAssistantAdapter;
 import com.flippey.qrdemo.OnItemClickCallback;
 import com.flippey.qrdemo.R;
+import com.flippey.qrdemo.TicketAssistantAdapter;
+import com.flippey.qrdemo.bean.LoginBean;
 import com.flippey.qrdemo.bean.TicketListBean;
 import com.flippey.qrdemo.utils.SPUtils;
 import com.flippey.qrdemo.utils.Util;
+import com.flippey.qrdemo.widget.BottomMenuDialog;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -36,6 +41,7 @@ import java.util.List;
  */
 public class TicketAssistantActivity extends AppCompatActivity implements View.OnClickListener {
     private String url = "http://shop.shenglenet.com/zhpw-admin/service/ticket_list_for_hp.php";
+    private String exchangeUrl = "http://shop.shenglenet.com/zhpw-admin/src/request/ticket_pool_manage/exchange_ticket.php";
     private static final int ALLDISCOUNT_GET_SUCCESS = 1;
 
     private View mBackTextView;
@@ -68,11 +74,11 @@ public class TicketAssistantActivity extends AppCompatActivity implements View.O
     private TicketAssistantAdapter mInvalidAdapter;
     private TicketAssistantAdapter mUsedAdapter;
     private TicketAssistantAdapter mAvailableAdapter;
-
+    private BottomMenuDialog mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_ticket_assiatant);
+        setContentView(R.layout.activity_ticket_assiatant);
         mInstance = TicketAssistantActivity.this;
         initView();
     }
@@ -225,7 +231,7 @@ public class TicketAssistantActivity extends AppCompatActivity implements View.O
 
     // 获取全部优惠券列表接口
     private void getMyTickets(String num) {
-        num = "15618329706";
+        //num = "15618329706";
         String token = (String) SPUtils.get(mInstance, SPUtils.TOKEN, "");
         if (!TextUtils.isEmpty(token)) {
             OkGo.<String>get(url)
@@ -238,7 +244,7 @@ public class TicketAssistantActivity extends AppCompatActivity implements View.O
                             String body = response.body();
                             try {
                                 JSONObject object = new JSONObject(body);
-                                if (object.has("data") && object.get("data") != JSONObject.NULL) {
+                                if (object.has("data") && object.get("data") != JSONObject.NULL&&object.getJSONArray("data").length()>0) {
                                     List<TicketListBean> ticketLists = TicketListBean.parse(object.getJSONArray("data"));
                                     if (ticketLists != null && ticketLists.size() > 0) {
                                         mAvailableList.clear();
@@ -263,15 +269,48 @@ public class TicketAssistantActivity extends AppCompatActivity implements View.O
                                                 mInvalidCount = mInvalidList.size();
                                                 mInValidTextView.setText(String.format(getString(R.string.invalid_tip), mInvalidCount));
                                                 mUsedCount = mUsedList.size();
-                                                mAlreadyUsedTextView.setText(String.format(getString(R.string.already_used_tip),mUsedCount));
+                                                mAlreadyUsedTextView.setText(String.format(getString(R.string.already_used_tip), mUsedCount));
                                                 changeView();
-                                                changeLvVisibility(mCurrentTab,mUsedCount);
+                                                changeLvVisibility(mCurrentTab, mAvailableCount);
                                             }
                                         });
                                     }
+                                } else {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mAvailableList.clear();
+                                            mUsedList.clear();
+                                            mInvalidList.clear();
+                                            mAvailableCount = mAvailableList.size();
+                                            mAvailableTextView.setText(String.format(getString(R.string.available_tip), mAvailableCount));
+                                            mInvalidCount = mInvalidList.size();
+                                            mInValidTextView.setText(String.format(getString(R.string.invalid_tip), mInvalidCount));
+                                            mUsedCount = mUsedList.size();
+                                            mAlreadyUsedTextView.setText(String.format(getString(R.string.already_used_tip), mUsedCount));
+                                            changeView();
+                                            changeLvVisibility(mCurrentTab, mAvailableCount);
+                                            Util.showToast(mInstance,"未查询到符合条件的票");
+                                        }
+                                    });
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mAvailableCount = mAvailableList.size();
+                                        mAvailableTextView.setText(String.format(getString(R.string.available_tip), mAvailableCount));
+                                        mInvalidCount = mInvalidList.size();
+                                        mInValidTextView.setText(String.format(getString(R.string.invalid_tip), mInvalidCount));
+                                        mUsedCount = mUsedList.size();
+                                        mAlreadyUsedTextView.setText(String.format(getString(R.string.already_used_tip), mUsedCount));
+                                        changeView();
+                                        changeLvVisibility(mCurrentTab, mAvailableCount);
+                                        Util.showToast(mInstance, "未查询到符合条件的票");
+                                        changeLvVisibility(mCurrentTab, mAvailableCount);
+                                    }
+                                });
                             }
                         }
                     });
@@ -279,17 +318,21 @@ public class TicketAssistantActivity extends AppCompatActivity implements View.O
     }
 
     private void changeView() {
-        if (mUsedCount > 0) {
+        if (mAvailableCount > 0) {
             if (mAvailableAdapter == null) {
-                mAvailableAdapter = new TicketAssistantAdapter(mInstance, mUsedList, new OnItemClickCallback() {
+                mAvailableAdapter = new TicketAssistantAdapter(mInstance, mAvailableList, new OnItemClickCallback() {
                     @Override
-                    public void onItemClick(String url, boolean useWebview) {
+                    public void onItemClick(final String ticket_id) {
+                        mDialog = new BottomMenuDialog.Builder(mInstance)
+                                .addMenu("换票", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mDialog.dismiss();
+                                        exchangeTicket(ticket_id);
+                                    }
+                                }).create();
 
-                    }
-
-                    @Override
-                    public void onItemClickByWebview(String url) {
-
+                        mDialog.show();
                     }
                 }, TicketAssistantAdapter.TYPE.AVAILABLE);
                 mLvAvailable.setAdapter(mAvailableAdapter);
@@ -302,12 +345,7 @@ public class TicketAssistantActivity extends AppCompatActivity implements View.O
             if (mUsedAdapter == null) {
                 mUsedAdapter = new TicketAssistantAdapter(mInstance, mUsedList, new OnItemClickCallback() {
                     @Override
-                    public void onItemClick(String url, boolean useWebview) {
-
-                    }
-
-                    @Override
-                    public void onItemClickByWebview(String url) {
+                    public void onItemClick(final String ticket_id) {
 
                     }
                 }, TicketAssistantAdapter.TYPE.USED);
@@ -321,13 +359,7 @@ public class TicketAssistantActivity extends AppCompatActivity implements View.O
             if (mInvalidAdapter == null) {
                 mInvalidAdapter = new TicketAssistantAdapter(mInstance, mInvalidList, new OnItemClickCallback() {
                     @Override
-                    public void onItemClick(String url, boolean useWebview) {
-
-                    }
-
-                    @Override
-                    public void onItemClickByWebview(String url) {
-
+                    public void onItemClick(String ticket_id) {
                     }
                 }, TicketAssistantAdapter.TYPE.INVALID);
                 mLvInvalid.setAdapter(mInvalidAdapter);
@@ -337,12 +369,90 @@ public class TicketAssistantActivity extends AppCompatActivity implements View.O
         }
     }
 
+    private void exchangeTicket(String ticket_id) {
+        String token = (String) SPUtils.get(mInstance, SPUtils.TOKEN, "");
+        if (TextUtils.isEmpty(token) || TextUtils.isEmpty(ticket_id)) {
+            return;
+        }
+        OkGo.<String>post(exchangeUrl)
+                .tag(mInstance)
+                .params("tk", token)
+                .params("ticket_id",ticket_id)
+                .params("type",0)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        String body = response.body();
+                        try {
+                            JSONObject object = new JSONObject(body);
+                            LoginBean parse = LoginBean.parse(object);
+                            int status = parse.getStatus();
+                            switch (status) {
+                                case 0:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Util.showToast(mInstance,"token无效");
+                                        }
+                                    });
+                                    break;
+                                case 1:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Util.showToast(mInstance,"验票成功");
+                                            String num = mCouponChangeEditText.getText().toString();
+                                            getMyTickets(num);
+                                        }
+                                    });
+                                    break;
+                                case 2:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Util.showToast(mInstance,"数据库出错");
+                                        }
+                                    });
+                                    break;
+                                case 3:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Util.showToast(mInstance,"该票目前的状态不能兑换");
+                                        }
+                                    });
+                                    break;
+                                case 4:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Util.showToast(mInstance,"当前用户所在的景区也该票所属景区不一致");
+                                        }
+                                    });
+                                    break;
+                                case 5:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Util.showToast(mInstance,"此票已过期");
+                                        }
+                                    });
+                                    break;
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
     private void changeLvVisibility(int currentTab, int count) {
         if (count == 0) {
             mLlEmptyView.setVisibility(View.VISIBLE);
+            mLvAvailable.setVisibility(View.GONE);
             mLvUsed.setVisibility(View.GONE);
             mLvInvalid.setVisibility(View.GONE);
-            mLvAvailable.setVisibility(View.GONE);
         } else {
             mLlEmptyView.setVisibility(View.GONE);
             mLvAvailable.setVisibility(currentTab == 0 ? View.VISIBLE : View.GONE);
@@ -350,5 +460,48 @@ public class TicketAssistantActivity extends AppCompatActivity implements View.O
             mLvInvalid.setVisibility(currentTab == 2 ? View.VISIBLE : View.GONE);
         }
 
+    }
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    public boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            ((EditText) v).setCursorVisible(true);
+            int[] leftTop = {0, 0};
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else {
+                ((EditText) v).setCursorVisible(false);
+                return true;
+            }
+        }
+        return false;
     }
 }
